@@ -114,6 +114,11 @@ public class FormView extends JFrame {
     }
 
     public void actionPerformed(ActionEvent e) {
+        String name = t1.getText();
+        String lastname = t2.getText();
+        ButtonModel gender = buttonGroup.getSelection();
+        String clas = (String) cls.getSelectedItem();
+        String Dob = t3.getText();
 
 
     }

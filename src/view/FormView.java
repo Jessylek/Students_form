@@ -83,6 +83,7 @@ public class FormView extends JFrame {
 
         bsubmit = new JButton("SUBMIT");
         bsubmit.setBounds(110, 250, 90, 35);
+        bsubmit.addActionListener(this);
         p1.add(bsubmit);
 
         p2 = new JPanel(null);
@@ -110,6 +111,11 @@ public class FormView extends JFrame {
 
     public void setBsubmit(JButton bsubmit) {
         this.bsubmit = bsubmit;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+
     }
 }
 

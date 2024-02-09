@@ -5,6 +5,9 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.table.DefaultTableModel;
 
 
 
@@ -17,6 +20,8 @@ public class FormView extends JFrame {
     JButton bcancel, bsubmit;
     JTable j;
     JScrollPane sp;
+    DefaultTableModel tableModel;
+
     public FormView(){
         this.setTitle("Registration Form");
         this.setLayout(null);
@@ -88,15 +93,23 @@ public class FormView extends JFrame {
         String[][] data = { { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " } };
 
         String[] columnNames = { "Name", "Sex", "Class", "DoB", "Action" };
-        j = new JTable(data, columnNames);
+        tableModel = new DefaultTableModel(columnNames, 0);
+        j = new JTable(tableModel);
         j.setBounds(80, 60, 350, 250);
-
         JScrollPane sp = new JScrollPane(j);
         sp.setBounds(0, 0, 500, 300);
         p2.add(sp);
         p2.setVisible(true);
         this.getContentPane().add(p2);
 
+    }
+
+    public JButton getBsubmit() {
+        return bsubmit;
+    }
+
+    public void setBsubmit(JButton bsubmit) {
+        this.bsubmit = bsubmit;
     }
 }
 

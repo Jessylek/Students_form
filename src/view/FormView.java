@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 
-public class FormView extends JFrame {
+public class FormView extends JFrame implements ActionListener {
     JLabel l1, l2, l3, l4, cl, dobl;
     JTextField t1, t2, t3;
     JPanel p1, p2;
@@ -22,6 +22,7 @@ public class FormView extends JFrame {
     JScrollPane sp;
     ButtonGroup buttonGroup;
     DefaultTableModel tableModel;
+    String selectedGender;
 
     public FormView(){
         this.setTitle("Registration Form");
@@ -59,10 +60,21 @@ public class FormView extends JFrame {
         M = new JRadioButton("M");
         M.setBounds(80, 110, 40, 15 );
         p1.add(M);
-        M.addActionListener();
+       M.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               selectedGender ="M";
+           }
+       });
         F = new JRadioButton("F");
         F.setBounds(120, 110, 40, 15 );
         p1.add(F);
+        F.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectedGender = "G";
+            }
+        });
 
         buttonGroup = new ButtonGroup();
         buttonGroup.add(M);
@@ -85,10 +97,18 @@ public class FormView extends JFrame {
         bcancel = new JButton("CANCEL");
         bcancel.setBounds(12, 250, 90, 35);
         p1.add(bcancel);
+        bcancel.addActionListener(new BActionListener());
+        private class BActionListener implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+            }
+        }
 
         bsubmit = new JButton("SUBMIT");
         bsubmit.setBounds(110, 250, 90, 35);
-        bsubmit.addActionListener(new  SubmitButtonListener(this));
+        bsubmit.addActionListener(this);
         p1.add(bsubmit);
 
         p2 = new JPanel(null);
@@ -118,25 +138,20 @@ public class FormView extends JFrame {
         this.bsubmit = bsubmit;
     }
 
-    class SubmitButtonListener implements ActionListener {
-        private FormView formView;
-
-        public SubmitButtonListener(FormView formView) {
-            this.formView = formView;
-        }
     public void actionPerformed(ActionEvent e) {
-        String name = formView.t1.getText();
-        String lastname = formView.t2.getText();
-        ButtonModel gender = formView.buttonGroup.getSelection();
-        String clas = (String) formView.cls.getSelectedItem();
-        String Dob = formView.t3.getText();
-        DefaultTableModel model = (DefaultTableModel) formView.j.getModel();
-        formView.tableModel.addRow(new Object[]{name+ " " +lastname, gender, clas, Dob, "Action"});
+        String name = t1.getText();
+        String lastname = t2.getText();
+       // ButtonModel gender = buttonGroup.;
+        String clas = (String) cls.getSelectedItem() ;
+        String Dob = t3.getText();
+        DefaultTableModel model = (DefaultTableModel) j.getModel();
+        tableModel.addRow(new Object[]{name+ " " +lastname, selectedGender, clas, Dob, "Action"});
 
 
     }
 
+
 }
 
 
-}
+//}

@@ -7,11 +7,6 @@ public class Main {
         View v = new View();
         v.setVisible(true);
 
-//
-     //   FormView vf = new FormView();
-//        vf.setVisible(true);
-
-
 
 
     }

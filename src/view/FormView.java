@@ -22,7 +22,7 @@ public class FormView extends JFrame implements ActionListener {
     JScrollPane sp;
     ButtonGroup buttonGroup;
     DefaultTableModel tableModel;
-    String selectedGender;
+    public String selectedGender;
 
     public FormView(){
         this.setTitle("Registration Form");
@@ -97,14 +97,7 @@ public class FormView extends JFrame implements ActionListener {
         bcancel = new JButton("CANCEL");
         bcancel.setBounds(12, 250, 90, 35);
         p1.add(bcancel);
-        bcancel.addActionListener(new BActionListener());
-        private class BActionListener implements ActionListener {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-
-            }
-        }
+       bcancel.addActionListener(this);
 
         bsubmit = new JButton("SUBMIT");
         bsubmit.setBounds(110, 250, 90, 35);
@@ -151,7 +144,77 @@ public class FormView extends JFrame implements ActionListener {
     }
 
 
+    public JTextField getT1() {
+        return t1;
+    }
+
+    public void setT1(JTextField t1) {
+        this.t1 = t1;
+    }
+
+    public JTextField getT2() {
+        return t2;
+    }
+
+    public void setT2(JTextField t2) {
+        this.t2 = t2;
+    }
+
+    public JTextField getT3() {
+        return t3;
+    }
+
+    public void setT3(JTextField t3) {
+        this.t3 = t3;
+    }
+
+    public JRadioButton getM() {
+        return M;
+    }
+
+    public void setM(JRadioButton m) {
+        M = m;
+    }
+
+    public JRadioButton getF() {
+        return F;
+    }
+
+    public void setF(JRadioButton f) {
+        F = f;
+    }
+
+    public JComboBox<String> getCls() {
+        return cls;
+    }
+
+    public void setCls(JComboBox<String> cls) {
+        this.cls = cls;
+    }
+
+    public DefaultTableModel getTableModel() {
+        return tableModel;
+    }
+
+    public void setTableModel(DefaultTableModel tableModel) {
+        this.tableModel = tableModel;
+    }
+
+    public JTable getJ() {
+        return j;
+    }
+
+    public void setJ(JTable j) {
+        this.j = j;
+    }
+
+    public ButtonGroup getButtonGroup() {
+        return buttonGroup;
+    }
+
+    public void setButtonGroup(ButtonGroup buttonGroup) {
+        this.buttonGroup = buttonGroup;
+    }
 }
 
 
-//}

@@ -20,6 +20,7 @@ public class FormView extends JFrame {
     JButton bcancel, bsubmit;
     JTable j;
     JScrollPane sp;
+    ButtonGroup buttonGroup;
     DefaultTableModel tableModel;
 
     public FormView(){
@@ -58,10 +59,14 @@ public class FormView extends JFrame {
         M = new JRadioButton("M");
         M.setBounds(80, 110, 40, 15 );
         p1.add(M);
-
+        M.addActionListener();
         F = new JRadioButton("F");
         F.setBounds(120, 110, 40, 15 );
         p1.add(F);
+
+        buttonGroup = new ButtonGroup();
+        buttonGroup.add(M);
+        buttonGroup.add(F);
 
         cl = new  JLabel("class");
         cl.setBounds(12, 150, 70, 15);
@@ -83,7 +88,7 @@ public class FormView extends JFrame {
 
         bsubmit = new JButton("SUBMIT");
         bsubmit.setBounds(110, 250, 90, 35);
-        bsubmit.addActionListener(this);
+        bsubmit.addActionListener(new  SubmitButtonListener(this));
         p1.add(bsubmit);
 
         p2 = new JPanel(null);
@@ -97,7 +102,7 @@ public class FormView extends JFrame {
         tableModel = new DefaultTableModel(columnNames, 0);
         j = new JTable(tableModel);
         j.setBounds(80, 60, 350, 250);
-        JScrollPane sp = new JScrollPane(j);
+        sp = new JScrollPane(j);
         sp.setBounds(0, 0, 500, 300);
         p2.add(sp);
         p2.setVisible(true);
@@ -113,14 +118,25 @@ public class FormView extends JFrame {
         this.bsubmit = bsubmit;
     }
 
+    class SubmitButtonListener implements ActionListener {
+        private FormView formView;
+
+        public SubmitButtonListener(FormView formView) {
+            this.formView = formView;
+        }
     public void actionPerformed(ActionEvent e) {
-        String name = t1.getText();
-        String lastname = t2.getText();
-        ButtonModel gender = buttonGroup.getSelection();
-        String clas = (String) cls.getSelectedItem();
-        String Dob = t3.getText();
+        String name = formView.t1.getText();
+        String lastname = formView.t2.getText();
+        ButtonModel gender = formView.buttonGroup.getSelection();
+        String clas = (String) formView.cls.getSelectedItem();
+        String Dob = formView.t3.getText();
+        DefaultTableModel model = (DefaultTableModel) formView.j.getModel();
+        formView.tableModel.addRow(new Object[]{name+ " " +lastname, gender, clas, Dob, "Action"});
 
 
     }
+
 }
 
+
+}

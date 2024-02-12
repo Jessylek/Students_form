@@ -18,11 +18,11 @@ public class UserClickContoller implements ActionListener{
             case "SUBMIT":{
                 String name = formView.getT1().getText();
                 String lastname = formView.getT2().getText();
-                //String gender = getselectedGender();
+                String gender = formView.selectedGender;
                 String clas = (String) formView.getCls().getSelectedItem() ;
                 String Dob = formView.getT3().getText();
                 DefaultTableModel model = (DefaultTableModel) formView.getJ().getModel();
-                formView.getTableModel().addRow(new Object[]{name+ " " +lastname, formView.selectedGender, clas, Dob, "Action"});
+                formView.getTableModel().addRow(new Object[]{name+ " " +lastname, gender, clas, Dob, "Action"});
             break;
             }
             case "CANCEL": {

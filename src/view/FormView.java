@@ -78,7 +78,7 @@ public class FormView extends JFrame implements ActionListener {
         F.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selectedGender = "G";
+                selectedGender = "F";
             }
         });
 

@@ -1,9 +1,10 @@
+package controller;
+
 import view.FormView;
 import javax.swing.*;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +18,7 @@ public class UserClickContoller implements ActionListener{
             case "SUBMIT":{
                 String name = formView.getT1().getText();
                 String lastname = formView.getT2().getText();
-                //ButtonModel gender = formView.getButtonGroup().selectedGender();
+                //String gender = getselectedGender();
                 String clas = (String) formView.getCls().getSelectedItem() ;
                 String Dob = formView.getT3().getText();
                 DefaultTableModel model = (DefaultTableModel) formView.getJ().getModel();
@@ -28,11 +29,13 @@ public class UserClickContoller implements ActionListener{
                 this.formView.getT1().setText(" ");
                 this.formView.getT2().setText(" ");
                 //ButtonModel gender = formView.getButtonGroup().selectedGender();
-                this.formView.getCls().setToolTipText(" "); ;
-                this.formView.getT3().setText(" ");
+                this.formView.getCls().setSelectedIndex(0);
+                this.formView.getT3().setValue(null);
                 break;
             }
 
         }
     }
+
+
 }

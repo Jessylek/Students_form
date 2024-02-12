@@ -1,19 +1,23 @@
 package view;
 
 import javax.swing.*;
+import controller.UserClickContoller;
 import javax.swing.table.JTableHeader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.awt.*;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.text.MaskFormatter;
 
 
 public class FormView extends JFrame implements ActionListener {
     JLabel l1, l2, l3, l4, cl, dobl;
-    JTextField t1, t2, t3;
+    JTextField t1, t2;
+    JFormattedTextField t3;
     JPanel p1, p2;
     JRadioButton M,F;
     JComboBox<String> cls;
@@ -22,20 +26,22 @@ public class FormView extends JFrame implements ActionListener {
     JScrollPane sp;
     ButtonGroup buttonGroup;
     DefaultTableModel tableModel;
+    SimpleDateFormat dateFormat;
     public String selectedGender;
-
     public FormView(){
         this.setTitle("Registration Form");
         this.setLayout(null);
         this.setBounds(800, 600, 800, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         l1 = new JLabel("Fill the form to register a student");
-        l1.setBounds(125, 25, 200, 15);
+        l1.setFont(new Font("sanserif", Font.BOLD, 14));
+        l1.setForeground(Color.darkGray);
+        l1.setBounds(125, 25, 400, 15);
         this.getContentPane().add(l1);
 
         p1 = new JPanel(null);
         p1.setBounds(10, 65, 200,300 );
-        p1.setBackground(Color.blue);
+        //p1.setBackground(Color.gray);
         this.getContentPane().add(p1);
 
         l2 = new JLabel("Name");
@@ -90,27 +96,36 @@ public class FormView extends JFrame implements ActionListener {
         dobl = new JLabel("DOB");
         dobl.setBounds(12, 200, 70, 15);
         p1.add(dobl);
-        t3 = new JTextField();
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        MaskFormatter maskFormatter = null;
+        try {
+            maskFormatter = new MaskFormatter("##/##/####");
+            maskFormatter.setPlaceholderCharacter('_');
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        t3 = new JFormattedTextField(maskFormatter);
         t3.setBounds(80, 200, 80, 20);
         p1.add(t3);
 
         bcancel = new JButton("CANCEL");
+        bcancel.setForeground(new Color(51,50,155));
         bcancel.setBounds(12, 250, 90, 35);
         p1.add(bcancel);
-       bcancel.addActionListener(this);
+        bcancel.addActionListener(new UserClickContoller(this));
 
         bsubmit = new JButton("SUBMIT");
+        bsubmit.setForeground(new Color(51,50,155));
         bsubmit.setBounds(110, 250, 90, 35);
-        bsubmit.addActionListener(this);
+        bsubmit.addActionListener(new UserClickContoller(this));
         p1.add(bsubmit);
 
         p2 = new JPanel(null);
         p2.setBounds(220, 65, 500,300 );
-        //p2.setBackground(Color.GRAY);
+        p2.setBackground(Color.GRAY);
         this.getContentPane().add(p2);
 
         String[][] data = { { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " } };
-
         String[] columnNames = { "Name", "Sex", "Class", "DoB", "Action" };
         tableModel = new DefaultTableModel(columnNames, 0);
         j = new JTable(tableModel);
@@ -139,8 +154,6 @@ public class FormView extends JFrame implements ActionListener {
         String Dob = t3.getText();
         DefaultTableModel model = (DefaultTableModel) j.getModel();
         tableModel.addRow(new Object[]{name+ " " +lastname, selectedGender, clas, Dob, "Action"});
-
-
     }
 
 
@@ -160,11 +173,11 @@ public class FormView extends JFrame implements ActionListener {
         this.t2 = t2;
     }
 
-    public JTextField getT3() {
+    public JFormattedTextField getT3() {
         return t3;
     }
 
-    public void setT3(JTextField t3) {
+    public void setT3(JFormattedTextField t3) {
         this.t3 = t3;
     }
 
@@ -215,6 +228,7 @@ public class FormView extends JFrame implements ActionListener {
     public void setButtonGroup(ButtonGroup buttonGroup) {
         this.buttonGroup = buttonGroup;
     }
+
 }
 
 

@@ -11,10 +11,11 @@ import javax.swing.JTable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
 
-public class FormView extends JFrame implements ActionListener {
+public class FormView extends JFrame {
     JLabel l1, l2, l3, l4, cl, dobl;
     JTextField t1, t2;
     JFormattedTextField t3;
@@ -66,12 +67,12 @@ public class FormView extends JFrame implements ActionListener {
         M = new JRadioButton("M");
         M.setBounds(80, 110, 40, 15 );
         p1.add(M);
-       M.addActionListener(new ActionListener() {
+        M.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
                selectedGender ="M";
            }
-       });
+        });
         F = new JRadioButton("F");
         F.setBounds(120, 110, 40, 15 );
         p1.add(F);
@@ -125,10 +126,13 @@ public class FormView extends JFrame implements ActionListener {
         p2.setBackground(Color.GRAY);
         this.getContentPane().add(p2);
 
-        String[][] data = { { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " }, { " ", " ", " ", " ", " " } };
+        String[][] data = { { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, { " ", " ", " ", " "}, };
         String[] columnNames = { "Name", "Sex", "Class", "DoB", "Action" };
         tableModel = new DefaultTableModel(columnNames, 0);
         j = new JTable(tableModel);
+
+        j.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
+        j.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JTextField()));
         j.setBounds(80, 60, 350, 250);
         sp = new JScrollPane(j);
         sp.setBounds(0, 0, 500, 300);
@@ -138,6 +142,11 @@ public class FormView extends JFrame implements ActionListener {
 
     }
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(FormView::new);
+    }
+
+
     public JButton getBsubmit() {
         return bsubmit;
     }
@@ -145,18 +154,6 @@ public class FormView extends JFrame implements ActionListener {
     public void setBsubmit(JButton bsubmit) {
         this.bsubmit = bsubmit;
     }
-
-    public void actionPerformed(ActionEvent e) {
-        String name = t1.getText();
-        String lastname = t2.getText();
-       // ButtonModel gender = buttonGroup.;
-        String clas = (String) cls.getSelectedItem() ;
-        String Dob = t3.getText();
-        DefaultTableModel model = (DefaultTableModel) j.getModel();
-        tableModel.addRow(new Object[]{name+ " " +lastname, selectedGender, clas, Dob, "Action"});
-    }
-
-
     public JTextField getT1() {
         return t1;
     }
@@ -229,6 +226,89 @@ public class FormView extends JFrame implements ActionListener {
         this.buttonGroup = buttonGroup;
     }
 
+    private class ButtonRenderer extends JPanel implements TableCellRenderer {
+        private JButton modifyButton, deleteButton;
+
+        public ButtonRenderer() {
+            setOpaque(true);
+
+            modifyButton = new JButton("M");
+            deleteButton = new JButton("D");
+
+            modifyButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Add your custom action for Modify button here
+                    int row = j.getEditingRow();
+                   // JOptionPane.showMessageDialog(null, "Modify button clicked in row: " + row);
+                    j.getCellEditor().stopCellEditing(); // Stop editing to update the cell
+                }
+            });
+
+            deleteButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Add your custom action for Delete button here
+                    int row = j.getEditingRow();
+                    DefaultTableModel model = (DefaultTableModel) j.getModel();
+                    model.removeRow(row);
+                }
+            });
+
+            add(modifyButton);
+            add(deleteButton);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            return this;
+        }
+    }
+
+    // Custom editor for the "Actions" column
+    private class ButtonEditor extends DefaultCellEditor {
+        private JPanel panel;
+        private JButton modifyButton;
+        private JButton deleteButton;
+
+        public ButtonEditor(JTextField textField) {
+            super(textField);
+
+            panel = new JPanel();
+            modifyButton = new JButton("M");
+            deleteButton = new JButton("D");
+
+            modifyButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Add your custom action for Modify button here
+                    int row = j.getEditingRow();
+                    //JOptionPane.showMessageDialog(null, "Modify button clicked in row: " + row);
+                    j.getCellEditor().stopCellEditing(); // Stop editing to update the cell
+                }
+            });
+
+            deleteButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Add your custom action for Delete button here
+                    int row = j.getEditingRow();
+                    DefaultTableModel model = (DefaultTableModel) j.getModel();
+                    model.removeRow(row);
+                }
+            });
+
+            panel.add(modifyButton);
+            panel.add(deleteButton);
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            return panel;
+        }
+    }
 }
+
+
 
 
